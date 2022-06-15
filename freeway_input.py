@@ -11,6 +11,7 @@ import pyautogui
 from utilities import num_to_location
 from proc_time_chk import check_saved_data, load_layout, get_freeway_winfo
 from proc_time_chk import get_wef_colors, get_graycount
+from compiler import find_solution
 
 user32 = ctypes.windll.user32
 
@@ -19,8 +20,6 @@ GAME = "Freeways"
 ctypes.windll.user32.GetWindowRect.argtypes = [
     wintypes.HWND,
     wintypes.LPRECT]
-
-pyautogui.PAUSE = 2.0
 
 class FreewayInfo():
     """
@@ -83,6 +82,8 @@ class FreewayInfo():
         """
         Click on the world map icon in the menu
         """
+        if self.am_i_bigmap():
+            return
         self.find_menu(70, True)
 
     def clear_level(self):
@@ -138,14 +139,20 @@ class FreewayInfo():
         pyautogui.moveTo(x=xbc, y=ybc)
         pyautogui.click()
 
-if __name__ == "__main__":
+def solve(level):
+    """
+    Find a solution for the given level number
+
+    @param level -- number from 0 to 80
+    """
     check_saved_data()
     fwy_info = FreewayInfo()
     fwy_info.go_to_world_map()
     fwy_info = FreewayInfo()
-    for levl in [1, 38, 6]:
-        fwy_info.go_to_level(levl)
-        fwy_info = FreewayInfo()
-        fwy_info.go_to_world_map()
-        fwy_info = FreewayInfo()
+    fwy_info.go_to_level(level)
+    fwy_info = FreewayInfo()
+    find_solution(level, fwy_info)
     print("Done")
+
+if __name__ == "__main__":
+    solve(1)

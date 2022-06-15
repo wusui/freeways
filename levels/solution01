@@ -1,0 +1,12 @@
+clear
+# Connect eastbound 101
+line 68,421 1058,421;
+# Connect westbound 101
+line 1058,346 580,346 rbd move 570,346 rbu move 68,346;
+# Add roadway to 6
+line 534,86 534,180;
+# Connect 6 to 101 west
+( 180, 534, 346, 0, 84, clockwise);
+# Connect 6 to 101 east
+( 255, 534, 421, 180, 96, counterclockwise);
+stopwatch

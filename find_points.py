@@ -1,3 +1,6 @@
+# Steam Freeway Game Drawing Tool
+# Copyright (c) 2022 Warren Usui
+# This code is licensed under the MIT license (see LICENSE.txt for details)
 """
 Print mouse location.  This tool is used to find locations to drraw on
 the new map
