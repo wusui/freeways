@@ -37,6 +37,7 @@ The key to this program is a freeway definition language which will be used
 to define the mouse movements and clicks to construct a solution to a given
 level. The following is a BNF description of the language.
 
+```
 <program> ::= <statement> | <statement> <program>
 <statement> ::= <comment> | <action>
 <comment> ::= "^#" <text> "\n"
@@ -85,9 +86,14 @@ instance).  The start and end points are specified in degrees with 0 degrees
 being east, 90 degrees being south, 180 degrees being west, and 270 degrees
 being north.  Negative values and values greater than 360 are allowed.
 
-<rbd> is used to draw bridges (right button down).  <rbu> stops drawing a
-bridge (right button up).  <clear> clears the screen.  <stopwatch> runs the
-stopwatch test.
+<rbd> is used to draw bridges (right button down).
+
+<rbu> stops drawing a bridge (right button up).
+
+<clear> clears the screen.
+
+<stopwatch> runs the stopwatch test.
+```
 
 Lexically, tokens in the language can be separated by blanks, new lines, and
 the defined isolated punctuation marks (",", ";", "(", ")").
