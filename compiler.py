@@ -113,24 +113,15 @@ def do_raw_arc(parms, fwy_info):
     """
     Draw an arc as specified by the () commands
     """
-    offsets = [(-1, -1), (1, -1), (-1, 1), (1, 1)]
-    ioff = (0, 2, 1, 0, 3, 1, 2, 3)
-    print(parms)
     arc_data = {}
     arc_data["clockwise"] = True
-    indx1 = 0
     if parms[10] == "counterclockwise":
         arc_data["clockwise"] = False
-        indx1 = 1
     arc_data["start"] = int(parms[6])
     arc_data["arc_end"] = int(parms[8])
     arc_data["radius"] = int(parms[0])
-    indx1 += (arc_data["start"] // 45)
-    factors = offsets[ioff[indx1]]
-    arc_data["origin"] = (fwy_info.bounds[0] + int(parms[2])
-                          + arc_data["radius"] * factors[0],
-                          fwy_info.bounds[1] + int(parms[4])
-                          + arc_data["radius"] * factors[1])
+    arc_data["origin"] = (fwy_info.bounds[0] + int(parms[2]),
+                          fwy_info.bounds[1] + int(parms[4]))
     draw_arc(arc_data)
     pyautogui.mouseUp(button='left')
 
