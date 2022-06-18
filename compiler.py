@@ -6,7 +6,7 @@ Compile a program (execute drawing operations)  Technically an interpreter...
 """
 import os
 import pyautogui
-from utilities import draw_arc
+from ugly_math import draw_arc
 
 def find_solution(level, fwy_info):
     """
@@ -33,8 +33,11 @@ def interpret(fwy_info):
 
         @param oprogram string -- text of program being interpreted
         """
+        fwy_info.line_table = {}
         cmd_table = {
-            'line': {'parm_cnt': 6,
+            'defline': {'parm_cnt': 7,
+                        'command': defline},
+            'line': {'parm_cnt': 7,
                      'command': do_line},
             'move': {'parm_cnt': 3,
                      'command': do_move},
@@ -56,7 +59,7 @@ def interpret(fwy_info):
                 continue
             program += "\n" + pline
         mod_prog = program
-        for punct in [",", ";", "(", ")"]:
+        for punct in [",", ";", "(", ")", "$"]:
             sp_punct = f' {punct} '
             mod_prog = mod_prog.replace(punct, sp_punct)
         tokens = mod_prog.split()
@@ -79,12 +82,27 @@ def interpret(fwy_info):
 
     return fcompile
 
-def do_line(parms, fwy_info):
+def defline(parms, fwy_info):
     """
-    Draw a new line
+    Define a line
     """
     if parms[1] != "," or parms[4] !=  ",":
         print("Syntax error: Comma expected in line command")
+    badname = True
+    if parms[6] >= 'A' and parms[6] <= 'Z':
+        badname = False
+    if parms[6] == '$':
+        return
+    if badname:
+        print("Illegal line name")
+    fwy_info.line_table[parms[6]] = {'from': [int(parms[0]), int(parms[2])],
+                                     'to': [int(parms[3]), int(parms[5])]}
+
+def do_line(parms, fwy_info):
+    """
+    Handle line command and actually draw a line
+    """
+    defline(parms, fwy_info)
     pyautogui.moveTo(x=fwy_info.bounds[0] + int(parms[0]),
                      y=fwy_info.bounds[1] + int(parms[2]))
     pyautogui.mouseDown(button='left')
@@ -100,12 +118,14 @@ def do_move(parms, fwy_info):
     pyautogui.moveTo(x=fwy_info.bounds[0] + int(parms[0]),
                      y=fwy_info.bounds[1] + int(parms[2]), duration=1)
 
-def do_arc(parms, _):
+def do_arc(parms, fwy_info):
     """
-    Draw an arc between two points orthagonally on a circle
+    Draw an arc between two points orthogonally on a circle
     """
     if parms[1] != "," or parms[4] !=  ",":
-        print("Syntax error: Comma expected in arc command")
+        print("Fix me: Syntax error: Comma expected in arc command")
+    if len(fwy_info.line_table) < 2:
+        print("Multiple entries must exist in line table")
     print('TO DO -- MUST IMPLEMENT')
     print(parms)
 
@@ -154,12 +174,3 @@ def do_endcmd(_):
     Handle a semi-colon
     """
     pyautogui.mouseUp(button='left')
-
-if __name__ == "__main__":
-    TESTV = "clear line 68,421 1058,421;"
-    TESTV += "line 1058,346 580,346 rbd move 570,346 rbu move 68,346;"
-    TESTV += "line 534,86 534,180;"
-    TESTV += "( 180, 534, 346, 0, 84, clockwise);"
-    TESTV += "( 255, 534, 421, 180, 96, counterclockwise); stopwatch"
-    # interpret(FreewayInfo())(TESTV)
-    print("Done")

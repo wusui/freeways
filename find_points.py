@@ -11,14 +11,16 @@ import freeway_input
 
 def find_points():
     """
-    This runs until the mouse is moved to the extreme left side of the page.
+    This runs until the mouse is moved left or above the Freeways window.
     It prints coordinates of mouse locations evvery five seconds.
     """
     fwy_info = freeway_input.FreewayInfo()
     print(fwy_info.bounds)
     while True:
         xval, yval = pyautogui.position()
-        if xval < 100:
+        xval -= fwy_info.bounds[0]
+        yval -= fwy_info.bounds[1]
+        if xval < 0:
             break
         print(xval, yval)
         time.sleep(5)

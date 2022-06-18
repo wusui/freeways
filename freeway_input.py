@@ -8,9 +8,9 @@ import ctypes
 from ctypes import wintypes
 import time
 import pyautogui
-from utilities import num_to_location
-from proc_time_chk import check_saved_data, load_layout, get_freeway_winfo
-from proc_time_chk import get_wef_colors, get_graycount
+from ugly_math import num_to_location
+from free_wind import check_saved_data, load_layout, get_freeway_winfo
+from free_wind import get_wef_colors, get_graycount
 from compiler import find_solution
 
 user32 = ctypes.windll.user32

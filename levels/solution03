@@ -1,0 +1,9 @@
+clear
+line 618,750 680,698 A;
+line 1065,626 395,74 B;
+line 320,90 320, 480 C;
+(220, 540, 460, 180, 90, counterclockwise);
+(220, 540, 460, 90, -180, counterclockwise);
+line 617,718 635,700 D;
+line 514,694 1089,750 E;
+stopwatch

@@ -1,14 +1,14 @@
 clear
 # main connectors
-line 613,716 613,77;
-line 1065,344 600,344 rbd move 500, 344 rbu move 78,344;
-line 536, 77 536, 716;
-line 78,420 540,420 rbd move 640, 420 rbu move 1065,420;
+line 613,716 613,77 A;
+line 1065,344 600,344 B rbd move 500, 344 rbu move 78,344;
+line 536, 77 536, 716 C;
+line 78,420 540,420  D rbd move 640, 420 rbu move 1065,420;
 # right hand ramps
-line 880,344  613,77;
-line 536, 77 270, 344;
-line 270, 420 538, 688;
-line 613, 688 880, 420;
+line 880,344  613,77 E;
+line 536, 77 270, 344 F;
+line 270, 420 538, 688 G;
+line 613, 688 880, 420 H;
 # cloverleafs
 (60, 673, 284, 180, 450, clockwise);
 (60, 476, 284, 90, 360, clockwise);
