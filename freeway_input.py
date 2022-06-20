@@ -155,4 +155,4 @@ def solve(level):
     print("Done")
 
 if __name__ == "__main__":
-    solve(2)
+    solve(1)

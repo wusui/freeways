@@ -2,11 +2,12 @@
 # Copyright (c) 2022 Warren Usui
 # This code is licensed under the MIT license (see LICENSE.txt for details)
 """
-Useful routines that are pretty much not dependent on other files.
+Math routines
 """
 import math
 import pyautogui
 
+BIGNUM = 100000000000.0
 def num_to_location(map_no):
     """
     Convert a map number to a location on the world map grid.  Treat the
@@ -74,3 +75,92 @@ def draw_arc(arc_info):
                          arc_info["radius"] * math.cos(math.radians(ival)),
                          arc_info["origin"][1] +
                          arc_info["radius"] * math.sin(math.radians(ival)))
+
+def get_equation(line_def):
+    """
+    Given a line segment that is defined by from and to points, return a line
+    equation with a slope and y-intercept value
+    """
+    a_x = line_def['from'][0]
+    a_y = line_def['from'][1]
+    diffx = line_def['to'][0] - a_x
+    diffy = line_def['to'][1] - a_y
+    if diffx == 0:
+        return {'slope': BIGNUM, 'yintercept': a_x}
+    slope = diffy / diffx
+    yintercept = a_y - slope * a_x
+    print("equation", slope, yintercept)
+    return {'slope': slope, 'yintercept': yintercept}
+
+def get_perpendicular(equation, point):
+    """
+    Get the equation of the line perpendicular to the line equation passed
+    in at the point passed in
+    """
+    slope = -1 / equation['slope']
+    if slope == 0:
+        return {'slope': BIGNUM, 'yintercept': point[0]}
+    yintercept = point[1] - point[0] * slope
+    return {'slope': slope, 'yintercept': yintercept}
+
+def get_intersection(equation1, equation2):
+    """
+    Find the point where two lines intersect
+    """
+    numerator = equation2['yintercept'] - equation1['yintercept']
+    denominator = equation1['slope'] - equation2['slope']
+    xval = numerator / denominator
+    yval = equation1['slope'] * xval + equation1['yintercept']
+    return [xval, yval]
+
+def get_pythag_dist(point1, point2):
+    """
+    Use Pythagorean Theorem to get distance between two points
+    """
+    d_1 = point2[0] - point1[0]
+    d_2 = point2[1] - point1[1]
+    return math.sqrt(d_1 * d_1  + d_2 * d_2)
+
+def get_direction(this_line, other_line, fwy_info):
+    """
+    return x and y values of direction toward the inside of the curve
+    (given as + or - 1 values)
+    """
+    retv = [-1, -1]
+    mval = fwy_info.equation[this_line]['slope']
+    bval = fwy_info.equation[this_line]['yintercept']
+    tval = (fwy_info.line_table[other_line]['to'][1] - bval) / mval
+    if tval < fwy_info.line_table[other_line]['to'][0]:
+        retv[0] = 1
+    tval = fwy_info.line_table[other_line]['to'][0] * mval + bval
+    if tval < fwy_info.line_table[other_line]['to'][1]:
+        retv[1] = 1
+    return retv
+
+def get_parallel_line_offset(o_line, dirv, radius, fwy_info):
+    """
+    Get parallel line to find origin.
+    """
+    mval = fwy_info.equation[o_line]['slope']
+    o_angle = math.acos(1 /  math.sqrt(mval * mval + 1))
+    x_offset = math.cos(math.pi / 2 - o_angle) * dirv[0] * radius
+    y_offset = math.sqrt(radius * radius - x_offset * x_offset) * dirv[1]
+    print(x_offset, y_offset)
+    x_offset = fwy_info.line_table[o_line]['from'][0] + x_offset
+    y_offset = fwy_info.line_table[o_line]['from'][1] + y_offset
+    slope = fwy_info.equation[o_line]['slope']
+    yintercept = y_offset - slope * x_offset
+    return {'slope': slope,  'yintercept': yintercept}
+
+def get_radii_angle(slope, origin, fwy_info, parm):
+    """
+    Get radius angle in degrees (0 is East)
+    """
+    angle = 0
+    if origin[0] > fwy_info.line_table[parm]['to'][0]:
+        angle = math.pi
+    angle += math.atan(slope)
+    if angle < 0:
+        angle +=  math.pi * 2
+    dangle = angle * 180 / math.pi
+    return int(dangle + .5)

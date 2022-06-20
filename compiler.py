@@ -6,7 +6,9 @@ Compile a program (execute drawing operations)  Technically an interpreter...
 """
 import os
 import pyautogui
-from ugly_math import draw_arc
+from ugly_math import draw_arc, get_equation, get_perpendicular
+from ugly_math import get_direction, get_parallel_line_offset
+from ugly_math import get_intersection, get_radii_angle
 
 def find_solution(level, fwy_info):
     """
@@ -34,6 +36,7 @@ def interpret(fwy_info):
         @param oprogram string -- text of program being interpreted
         """
         fwy_info.line_table = {}
+        fwy_info.equation = {}
         cmd_table = {
             'defline': {'parm_cnt': 7,
                         'command': defline},
@@ -41,7 +44,7 @@ def interpret(fwy_info):
                      'command': do_line},
             'move': {'parm_cnt': 3,
                      'command': do_move},
-            'arc': {'parm_cnt': 7,
+            'arc': {'parm_cnt': 3,
                     'command': do_arc},
             '(': {'parm_cnt': 12,
                   'command': do_raw_arc}
@@ -84,7 +87,7 @@ def interpret(fwy_info):
 
 def defline(parms, fwy_info):
     """
-    Define a line
+    Define a line from two points and a label.
     """
     if parms[1] != "," or parms[4] !=  ",":
         print("Syntax error: Comma expected in line command")
@@ -97,6 +100,7 @@ def defline(parms, fwy_info):
         print("Illegal line name")
     fwy_info.line_table[parms[6]] = {'from': [int(parms[0]), int(parms[2])],
                                      'to': [int(parms[3]), int(parms[5])]}
+    fwy_info.equation[parms[6]] = get_equation(fwy_info.line_table[parms[6]])
 
 def do_line(parms, fwy_info):
     """
@@ -122,12 +126,43 @@ def do_arc(parms, fwy_info):
     """
     Draw an arc between two points orthogonally on a circle
     """
-    if parms[1] != "," or parms[4] !=  ",":
-        print("Fix me: Syntax error: Comma expected in arc command")
-    if len(fwy_info.line_table) < 2:
-        print("Multiple entries must exist in line table")
-    print('TO DO -- MUST IMPLEMENT')
-    print(parms)
+    for indx in range(0, 2):
+        if parms[indx] not in fwy_info.line_table:
+            print(f"parameter {parms[indx]} missing")
+            return
+    eq_a = get_perpendicular(fwy_info.equation[parms[0]],
+                                fwy_info.line_table[parms[0]]['to'])
+    eq_b = get_perpendicular(fwy_info.equation[parms[1]],
+                                fwy_info.line_table[parms[1]]['from'])
+    dir_a = get_direction(parms[0], parms[1], fwy_info)
+    dir_b = get_direction(parms[1], parms[0], fwy_info)
+    print(dir_a,  dir_b, eq_a, eq_b)
+    radius = int(parms[2])
+    peq_a = get_parallel_line_offset(parms[0], dir_a, radius, fwy_info)
+    peq_b = get_parallel_line_offset(parms[1], dir_b, radius, fwy_info)
+    origin = get_intersection(peq_a, peq_b)
+    origin = [int(origin[0] + .5) + fwy_info.bounds[0],
+              int(origin[1] + .5) + fwy_info.bounds[1]]
+    print("DEBUG:", origin, radius, eq_a, eq_b)
+    degrees_a = get_radii_angle(eq_a["slope"], origin, fwy_info, parms[0])
+    degrees_b = get_radii_angle(eq_b["slope"], origin, fwy_info, parms[1])
+    arc_data = {}
+    arc_data["clockwise"] = True
+    if degrees_b < degrees_a:
+        degrees_b += 360
+        if degrees_b - degrees_a > 180:
+            degrees_b -= 360
+    if degrees_a > degrees_b:
+        arc_data["clockwise"] = False
+    print(degrees_a, degrees_b)
+    arc_data["clockwise"] = False
+    arc_data["start"] = degrees_a
+    arc_data["arc_end"] = degrees_b
+    arc_data["radius"] = radius
+    arc_data["origin"] = origin
+
+    draw_arc(arc_data)
+    print("do_arc_info", origin, parms)
 
 def do_raw_arc(parms, fwy_info):
     """
