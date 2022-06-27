@@ -7,17 +7,6 @@ Math routines
 import math
 import pyautogui
 
-ARC_TABLE = [
-    {'clockwise': False, 'start': 90},
-    {'clockwise': False, 'start': 180},
-    {'clockwise': True, 'start': 270},
-    {'clockwise': True, 'start': 0},
-    {'clockwise': True, 'start': 90},
-    {'clockwise': True, 'start': 180},
-    {'clockwise': False, 'start': 270},
-    {'clockwise': False, 'start': 0}
-    ]
-
 BIGNUM = 100000000000.0
 def num_to_location(map_no):
     """
@@ -118,6 +107,9 @@ def get_perpendicular(equation, point):
     return {'slope': slope, 'yintercept': yintercept}
 
 def fixed_x(xval, equationy):
+    """
+    Find intersection of line with an x-coordinate (vertical line)
+    """
     return [xval, xval * equationy['slope'] + equationy['yintercept']]
 
 def get_intersection(equation1, equation2):
@@ -134,13 +126,6 @@ def get_intersection(equation1, equation2):
     yval = equation1['slope'] * xval + equation1['yintercept']
     return [xval, yval]
 
-    """
-    Use Pythagorean Theorem to get distance between two points
-    """
-    d_1 = point2[0] - point1[0]
-    d_2 = point2[1] - point1[1]
-    return math.sqrt(d_1 * d_1  + d_2 * d_2)
-
 def get_direction(this_line, other_line, fwy_info):
     """
     return x and y values of direction toward the inside of the curve
@@ -152,8 +137,7 @@ def get_direction(this_line, other_line, fwy_info):
     if mval == BIGNUM:
         if fwy_info.line_table[other_line]['from'][0] < bval:
             return [-1, -1]
-        else:
-            return [1, 1]
+        return [1, 1]
     if mval == 0:
         tval = BIGNUM
     else:
@@ -192,7 +176,7 @@ def get_radii_angle(slope, origin, fwy_info, parms, indx):
     degrees from the last point the circle intersected an x or y axis
     """
     angle = 0
-    if slope == 0 or slope == BIGNUM:
+    if slope in (0, BIGNUM):
         return 0
     if origin[0] > fwy_info.line_table[parms[indx]]['to'][0]:
         angle = math.pi
@@ -205,46 +189,19 @@ def get_radii_angle(slope, origin, fwy_info, parms, indx):
         dangle -= 90
     return dangle + 90
 
-"""
-def get_arc_info(fwy_info, parms, origin):
-    indx = 0
-    oline = fwy_info.line_table[parms[0]]
-    if oline['to'][1] < oline['from'][1]:
-        indx = 4
-    ox_val = origin[0] - fwy_info.bounds[0]
-    oy_val = origin[1] - fwy_info.bounds[1]
-    testr = oy_val - fwy_info.equation[parms[0]]['yintercept']
-    lslope = fwy_info.equation[parms[0]]['slope']
-    if lslope != 0:
-        testr /= lslope
-        if testr > ox_val:
-            indx += 2
-        if lslope < 0:
-            indx += 1
-    else:
-        if (fwy_info.line_table[parms[1]]['from'][1] >
-            fwy_info.line_table[parms[0]]['to'][1]):
-            indx += 2
-    print("INDEX INDEX INDEX", indx, ox_val, oy_val)
-    arc_info = ARC_TABLE[indx]
-    arc = {}
-    arc["clockwise"] = arc_info["clockwise"]
-    arc["start"] = arc_info["start"]
-    return arc
-"""
-
 def get_circle_pt_data(fwy_info, oline, dirv):
+    """
+    Find points on the circle for an arc
+    """
     slopev = fwy_info.equation[oline]["slope"]
     if slopev == 0:
         if dirv[1] == 1:
             return 270
-        else:
-            return 90
+        return 90
     if slopev == BIGNUM:
         if dirv[1] == 1:
             return 180
-        else:
-            return 0
+        return 0
     quadrant = 0
     if slopev > 0:
         quadrant += 90

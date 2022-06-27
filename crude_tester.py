@@ -21,4 +21,6 @@ def crudetest(number):
     interpret(fwy)(data)
 
 if __name__ == "__main__":
-    crudetest("01")
+    crudetest("90")
+    crudetest("91")
+    crudetest("92")

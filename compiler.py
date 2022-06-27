@@ -145,44 +145,6 @@ def do_arc(parms, fwy_info):
     print("DEBUG:", origin, radius, eq_a, eq_b)
     degrees_a = get_radii_angle(eq_a["slope"], origin, fwy_info, parms, 0)
     degrees_b = get_radii_angle(eq_b["slope"], origin, fwy_info, parms, 1)
-    foobar = """
-    arc_data = {}
-    if parms[1] == 'E':
-        import pdb; pdb.set_trace()
-    arc_data["clockwise"] = True
-    if degrees_b < degrees_a:
-        degrees_b += 360
-        if degrees_b - degrees_a > 180:
-            degrees_b -= 360
-    if degrees_a > degrees_b:
-        arc_data["clockwise"] = False
-    print(degrees_a, degrees_b)
-    arc_data["start"] = degrees_a
-    arc_data["arc_end"] = degrees_b
-    """
-    foo2 = """
-    arc_data = get_arc_info(fwy_info, parms, origin)
-    if arc_data['start'] % 90 != 0:
-        arc_data["arc_end"] = degrees_b + arc_data["start"]
-        arc_data["start"] += degrees_a
-        if arc_data['clockwise']:
-            arc_data["arc_end"] += 90
-        else:
-            arc_data["arc_end"] -= 90
-        if fwy_info.equation[parms[1]]['slope'] == 0:
-            if arc_data["clockwise"]:
-                if arc_data["arc_end"] > 270:
-                    arc_data["arc_end"] = 270
-                else:
-                    if arc_data["arc_end"] > 90:
-                        arc_data["arc_end"] = 90;
-            else:
-                if arc_data["start"] > 270:
-                    if arc_data["arc_end"] < 270:
-                        arc_data["arc_end"] =  270
-    else:
-        arc_data["arc_end"] = 45
-    """
     arc_data = {}
     arc_data["radius"] = radius
     #arc_data["origin"] = origin
