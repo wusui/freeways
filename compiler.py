@@ -8,7 +8,8 @@ import os
 import pyautogui
 from ugly_math import draw_arc, get_equation, get_perpendicular
 from ugly_math import get_direction, get_parallel_line_offset
-from ugly_math import get_intersection, get_radii_angle
+from ugly_math import get_intersection, get_radii_angle, get_circle_pt_data
+#from ugly_math import get_radii_angle, get_arc_info
 
 def find_solution(level, fwy_info):
     """
@@ -136,17 +137,18 @@ def do_arc(parms, fwy_info):
                                 fwy_info.line_table[parms[1]]['from'])
     dir_a = get_direction(parms[0], parms[1], fwy_info)
     dir_b = get_direction(parms[1], parms[0], fwy_info)
-    print(dir_a,  dir_b, eq_a, eq_b)
+    print(dir_a, dir_b, eq_a, eq_b)
     radius = int(parms[2])
     peq_a = get_parallel_line_offset(parms[0], dir_a, radius, fwy_info)
     peq_b = get_parallel_line_offset(parms[1], dir_b, radius, fwy_info)
     origin = get_intersection(peq_a, peq_b)
-    origin = [int(origin[0] + .5) + fwy_info.bounds[0],
-              int(origin[1] + .5) + fwy_info.bounds[1]]
     print("DEBUG:", origin, radius, eq_a, eq_b)
-    degrees_a = get_radii_angle(eq_a["slope"], origin, fwy_info, parms[0])
-    degrees_b = get_radii_angle(eq_b["slope"], origin, fwy_info, parms[1])
+    degrees_a = get_radii_angle(eq_a["slope"], origin, fwy_info, parms, 0)
+    degrees_b = get_radii_angle(eq_b["slope"], origin, fwy_info, parms, 1)
+    foobar = """
     arc_data = {}
+    if parms[1] == 'E':
+        import pdb; pdb.set_trace()
     arc_data["clockwise"] = True
     if degrees_b < degrees_a:
         degrees_b += 360
@@ -155,14 +157,56 @@ def do_arc(parms, fwy_info):
     if degrees_a > degrees_b:
         arc_data["clockwise"] = False
     print(degrees_a, degrees_b)
-    arc_data["clockwise"] = False
     arc_data["start"] = degrees_a
     arc_data["arc_end"] = degrees_b
+    """
+    foo2 = """
+    arc_data = get_arc_info(fwy_info, parms, origin)
+    if arc_data['start'] % 90 != 0:
+        arc_data["arc_end"] = degrees_b + arc_data["start"]
+        arc_data["start"] += degrees_a
+        if arc_data['clockwise']:
+            arc_data["arc_end"] += 90
+        else:
+            arc_data["arc_end"] -= 90
+        if fwy_info.equation[parms[1]]['slope'] == 0:
+            if arc_data["clockwise"]:
+                if arc_data["arc_end"] > 270:
+                    arc_data["arc_end"] = 270
+                else:
+                    if arc_data["arc_end"] > 90:
+                        arc_data["arc_end"] = 90;
+            else:
+                if arc_data["start"] > 270:
+                    if arc_data["arc_end"] < 270:
+                        arc_data["arc_end"] =  270
+    else:
+        arc_data["arc_end"] = 45
+    """
+    arc_data = {}
     arc_data["radius"] = radius
+    #arc_data["origin"] = origin
+    #arc_data["start"] =  0
+    #arc_data["arc_end"] =  359
+    adata = get_circle_pt_data(fwy_info, parms[0], dir_a)
+    arc_data["start"] = adata + degrees_a
+    adata = get_circle_pt_data(fwy_info, parms[1], dir_b)
+    arc_data["arc_end"] = adata + degrees_b
+    origin = [int(origin[0] + .5) + fwy_info.bounds[0],
+              int(origin[1] + .5) + fwy_info.bounds[1]]
     arc_data["origin"] = origin
-
+    if abs(arc_data["start"] - arc_data["arc_end"]) > 180:
+        if arc_data["start"] > 270:
+            if arc_data["arc_end"] < arc_data["start"]:
+                arc_data["arc_end"] += 360
+        if arc_data["start"] < 90:
+            if arc_data["arc_end"] > arc_data["start"]:
+                arc_data["arc_end"] -= 360
+    arc_data["clockwise"] = False
+    if arc_data["start"] < arc_data["arc_end"]:
+        arc_data["clockwise"] = True
     draw_arc(arc_data)
-    print("do_arc_info", origin, parms)
+    print("do_arc_info", origin, parms, arc_data)
 
 def do_raw_arc(parms, fwy_info):
     """

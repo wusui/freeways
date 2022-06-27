@@ -7,6 +7,17 @@ Math routines
 import math
 import pyautogui
 
+ARC_TABLE = [
+    {'clockwise': False, 'start': 90},
+    {'clockwise': False, 'start': 180},
+    {'clockwise': True, 'start': 270},
+    {'clockwise': True, 'start': 0},
+    {'clockwise': True, 'start': 90},
+    {'clockwise': True, 'start': 180},
+    {'clockwise': False, 'start': 270},
+    {'clockwise': False, 'start': 0}
+    ]
+
 BIGNUM = 100000000000.0
 def num_to_location(map_no):
     """
@@ -70,6 +81,7 @@ def draw_arc(arc_info):
     cstep = 3
     if not arc_info["clockwise"]:
         cstep = -3
+    print(indx, arc_info["arc_end"], cstep)
     for ival in range(indx, arc_info["arc_end"], cstep):
         pyautogui.moveTo(arc_info["origin"][0] +
                          arc_info["radius"] * math.cos(math.radians(ival)),
@@ -97,23 +109,31 @@ def get_perpendicular(equation, point):
     Get the equation of the line perpendicular to the line equation passed
     in at the point passed in
     """
-    slope = -1 / equation['slope']
-    if slope == 0:
+    if equation['slope'] == 0:
         return {'slope': BIGNUM, 'yintercept': point[0]}
+    slope = -1 / equation['slope']
     yintercept = point[1] - point[0] * slope
+    if abs(slope) < .0000000001:
+        slope = 0
     return {'slope': slope, 'yintercept': yintercept}
+
+def fixed_x(xval, equationy):
+    return [xval, xval * equationy['slope'] + equationy['yintercept']]
 
 def get_intersection(equation1, equation2):
     """
     Find the point where two lines intersect
     """
+    if equation1['slope'] == BIGNUM:
+        return fixed_x(equation1['yintercept'], equation2)
+    if equation2['slope'] == BIGNUM:
+        return fixed_x(equation2['yintercept'], equation1)
     numerator = equation2['yintercept'] - equation1['yintercept']
     denominator = equation1['slope'] - equation2['slope']
     xval = numerator / denominator
     yval = equation1['slope'] * xval + equation1['yintercept']
     return [xval, yval]
 
-def get_pythag_dist(point1, point2):
     """
     Use Pythagorean Theorem to get distance between two points
     """
@@ -129,7 +149,15 @@ def get_direction(this_line, other_line, fwy_info):
     retv = [-1, -1]
     mval = fwy_info.equation[this_line]['slope']
     bval = fwy_info.equation[this_line]['yintercept']
-    tval = (fwy_info.line_table[other_line]['to'][1] - bval) / mval
+    if mval == BIGNUM:
+        if fwy_info.line_table[other_line]['from'][0] < bval:
+            return [-1, -1]
+        else:
+            return [1, 1]
+    if mval == 0:
+        tval = BIGNUM
+    else:
+        tval = (fwy_info.line_table[other_line]['to'][1] - bval) / mval
     if tval < fwy_info.line_table[other_line]['to'][0]:
         retv[0] = 1
     tval = fwy_info.line_table[other_line]['to'][0] * mval + bval
@@ -141,6 +169,11 @@ def get_parallel_line_offset(o_line, dirv, radius, fwy_info):
     """
     Get parallel line to find origin.
     """
+    slope = fwy_info.equation[o_line]['slope']
+    if slope == BIGNUM:
+        x_offset = radius * dirv[0]
+        yintercept = fwy_info.line_table[o_line]['to'][0] + x_offset
+        return {'slope': slope, 'yintercept': yintercept}
     mval = fwy_info.equation[o_line]['slope']
     o_angle = math.acos(1 /  math.sqrt(mval * mval + 1))
     x_offset = math.cos(math.pi / 2 - o_angle) * dirv[0] * radius
@@ -148,19 +181,73 @@ def get_parallel_line_offset(o_line, dirv, radius, fwy_info):
     print(x_offset, y_offset)
     x_offset = fwy_info.line_table[o_line]['from'][0] + x_offset
     y_offset = fwy_info.line_table[o_line]['from'][1] + y_offset
-    slope = fwy_info.equation[o_line]['slope']
     yintercept = y_offset - slope * x_offset
+    if slope == BIGNUM:
+        yintercept = x_offset
     return {'slope': slope,  'yintercept': yintercept}
 
-def get_radii_angle(slope, origin, fwy_info, parm):
+def get_radii_angle(slope, origin, fwy_info, parms, indx):
     """
-    Get radius angle in degrees (0 is East)
+    Get radius angle in degrees (0 is East).  Calculate the number of
+    degrees from the last point the circle intersected an x or y axis
     """
     angle = 0
-    if origin[0] > fwy_info.line_table[parm]['to'][0]:
+    if slope == 0 or slope == BIGNUM:
+        return 0
+    if origin[0] > fwy_info.line_table[parms[indx]]['to'][0]:
         angle = math.pi
     angle += math.atan(slope)
     if angle < 0:
-        angle +=  math.pi * 2
+        angle +=  math.pi / 2
     dangle = angle * 180 / math.pi
-    return int(dangle + .5)
+    dangle = int(dangle + .5)
+    while dangle > 0:
+        dangle -= 90
+    return dangle + 90
+
+"""
+def get_arc_info(fwy_info, parms, origin):
+    indx = 0
+    oline = fwy_info.line_table[parms[0]]
+    if oline['to'][1] < oline['from'][1]:
+        indx = 4
+    ox_val = origin[0] - fwy_info.bounds[0]
+    oy_val = origin[1] - fwy_info.bounds[1]
+    testr = oy_val - fwy_info.equation[parms[0]]['yintercept']
+    lslope = fwy_info.equation[parms[0]]['slope']
+    if lslope != 0:
+        testr /= lslope
+        if testr > ox_val:
+            indx += 2
+        if lslope < 0:
+            indx += 1
+    else:
+        if (fwy_info.line_table[parms[1]]['from'][1] >
+            fwy_info.line_table[parms[0]]['to'][1]):
+            indx += 2
+    print("INDEX INDEX INDEX", indx, ox_val, oy_val)
+    arc_info = ARC_TABLE[indx]
+    arc = {}
+    arc["clockwise"] = arc_info["clockwise"]
+    arc["start"] = arc_info["start"]
+    return arc
+"""
+
+def get_circle_pt_data(fwy_info, oline, dirv):
+    slopev = fwy_info.equation[oline]["slope"]
+    if slopev == 0:
+        if dirv[1] == 1:
+            return 270
+        else:
+            return 90
+    if slopev == BIGNUM:
+        if dirv[1] == 1:
+            return 180
+        else:
+            return 0
+    quadrant = 0
+    if slopev > 0:
+        quadrant += 90
+    if slopev * dirv[0] < 0:
+        quadrant += 180
+    return quadrant
