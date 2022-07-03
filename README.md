@@ -45,7 +45,7 @@ level. The following is a BNF description of the language.
 <line> ::= "line" <point> <point> <line-name><terminator>
 <defline> ::= "defline" <point> <point> <line-name>
 <move> ::= "move" <point> <terminator>
-<arc> ::= "arc" <line-name> <line-name> <terminator>
+<arc> ::= "arc" <line-name> <line-name> <number> <terminator>
 <direction> ::= "clockwise" | "counterclockwise"
 <point> ::= <number> "," <number>
 <number> ::= <sign> <pos-num>
@@ -109,3 +109,27 @@ moving the Freeways window may adversely affect the behavior
 The windows placement of the game screen may vary between launches slightly.
 Because of this, whenever a new game window is brought up some calibration
 code is run and offsets are stored in a local json file.
+
+## cmpvalues.json
+
+Due to some inexactness in bit counts on the display, every time a new instance of the
+freeway game is started, the cmpvalues.json file in the source directory needs to be
+created or updated.  The json file contains two fields: wef_info which consists of bit counts
+of green and blue pixels in the "World Efficiency" text on the main map, and a greycount value
+which is the number of grey pixels in the menu area.  The "World Efficiency" text is used
+to determine if we are on the world map, and the greycount value is needed to find the menu
+key.
+
+## Usage
+
+Once a freeway game is started, "python freeway_setup"  needs to be run to set cmpvalues.json
+and handle other initialization tasks.  It redraws map 1 and completes once that page has
+finished redrawing and retimed.
+
+Now if a user is on a map, running python page_tester.py <level> redraws that map.
+
+python find_points.py is a development tool that prints the coordinates of the cursor every
+five seconds.  It is useful for getting coordinate values when developing the solutions found.
+
+level is a directory which contains the coded text for each solution.
+
