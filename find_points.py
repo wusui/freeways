@@ -7,14 +7,14 @@ the new map
 """
 import time
 import pyautogui
-import freeway_input
+import freeway_setup
 
 def find_points():
     """
     This runs until the mouse is moved left or above the Freeways window.
     It prints coordinates of mouse locations evvery five seconds.
     """
-    fwy_info = freeway_input.FreewayInfo()
+    fwy_info = freeway_setup.FreewayInfo()
     print(fwy_info.bounds)
     while True:
         xval, yval = pyautogui.position()

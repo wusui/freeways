@@ -77,6 +77,7 @@ class FreewayInfo():
         ycoord += self.bounds[1]
         pyautogui.moveTo(x=xcoord, y=ycoord)
         pyautogui.click()
+        time.sleep(5)
 
     def go_to_world_map(self):
         """
@@ -85,6 +86,7 @@ class FreewayInfo():
         if self.am_i_bigmap():
             return
         self.find_menu(70, True)
+        time.sleep(5)
 
     def clear_level(self):
         """
@@ -139,13 +141,14 @@ class FreewayInfo():
         pyautogui.moveTo(x=xbc, y=ybc)
         pyautogui.click()
 
-def solve(level):
+def setup(level):
     """
     Find a solution for the given level number
 
     @param level -- number from 0 to 80
     """
     check_saved_data()
+    time.sleep(5)
     fwy_info = FreewayInfo()
     fwy_info.go_to_world_map()
     fwy_info = FreewayInfo()
@@ -155,4 +158,4 @@ def solve(level):
     print("Done")
 
 if __name__ == "__main__":
-    solve(1)
+    setup(1)
