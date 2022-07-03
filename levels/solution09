@@ -1,0 +1,20 @@
+clear
+line 1070,422 792,422 A;
+line 742,408 570,330 B;
+line 440,270 80,270 C;
+arc A B 120;
+line 570,330 440,270 D;
+defline 0,344 80,344 E;
+line 80,344 464,654 F;
+line 356,496 1070,496 G;
+(78, 180, 192, 90, 270, clockwise);
+(78, 394, 192, 270, 450, clockwise);
+defline 80,344 210,450 H
+arc H G 300;
+defline 464,574 686,574 I
+arc H I 300;
+line 680,646 856,496 J;
+line 686,574 824,496 K;
+(37, 1100, 459, 450, 270, counterclockwise);
+(37, 80, 307, 270, 90, counterclockwise);
+stopwatch

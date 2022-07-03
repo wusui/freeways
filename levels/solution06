@@ -1,0 +1,24 @@
+clear
+line 536,90 536,210 Z rbd move 536,240 rbu move 536,600 rbd move 536,620 rbu move 536,692;
+line 613,690 613,575 Y rbd move 613,535 rbu move 613,180 rbd move 613,150 rbu move 613,90;
+line 139,226 139,540 C;
+line 179,580 973,580 D;
+line 1013,540 1013,226 E;
+line 973,186 176,186 F;
+arc C D 40;
+arc D E 40;
+arc E F 40;
+arc F C 40;
+( 50, 89, 294, 0, 90, clockwise);
+( 50, 89, 474, 270, 360, clockwise);
+( 50, 1063, 294, 90, 180, clockwise);
+( 50, 1063, 474, 180, 270, clockwise);
+(140, 396, 720, 270, 360, clockwise);
+(140, 753, 730, 180, 270, clockwise);
+(140, 396, 46, 0, 90, clockwise);
+(140, 753, 46, 90, 180, clockwise);
+(30, 896, 156, 90, 270, clockwise);
+(33, 254, 611, 270, 450, clockwise);
+line 898,33 774,186 M;
+line 259,724 371,580 N;
+stopwatch
