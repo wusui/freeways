@@ -55,6 +55,7 @@ def interpret(fwy_info):
             'stopwatch': do_stopwatch,
             'rbd': do_rbutdown,
             'rbu': do_rbutup,
+            'hole': do_updown,
             ';': do_endcmd
         }
         program = ""
@@ -111,6 +112,7 @@ def do_line(parms, fwy_info):
     pyautogui.moveTo(x=fwy_info.bounds[0] + int(parms[0]),
                      y=fwy_info.bounds[1] + int(parms[2]))
     pyautogui.mouseDown(button='left')
+    fwy_info.butt_stat[0] = True
     pyautogui.moveTo(x=fwy_info.bounds[0] + int(parms[3]),
                      y=fwy_info.bounds[1] + int(parms[5]), duration=1)
 
@@ -167,7 +169,7 @@ def do_arc(parms, fwy_info):
     arc_data["clockwise"] = False
     if arc_data["start"] < arc_data["arc_end"]:
         arc_data["clockwise"] = True
-    draw_arc(arc_data)
+    draw_arc(arc_data, fwy_info)
     print("do_arc_info", origin, parms, arc_data)
 
 def do_raw_arc(parms, fwy_info):
@@ -183,8 +185,9 @@ def do_raw_arc(parms, fwy_info):
     arc_data["radius"] = int(parms[0])
     arc_data["origin"] = (fwy_info.bounds[0] + int(parms[2]),
                           fwy_info.bounds[1] + int(parms[4]))
-    draw_arc(arc_data)
+    draw_arc(arc_data, fwy_info)
     pyautogui.mouseUp(button='left')
+    fwy_info.butt_stat[0] = False
 
 def do_clear(fwy_info):
     """
@@ -198,20 +201,31 @@ def do_stopwatch(fwy_info):
     """
     fwy_info.stopwatch()
 
-def do_rbutdown(_):
+def do_rbutdown(fwy_info):
     """
-    Handle arbd command (right button down)
+    Handle rbd command (right button down)
     """
     pyautogui.mouseDown(button='right')
+    fwy_info.butt_stat[1] = True
 
-def do_rbutup(_):
+def do_rbutup(fwy_info):
     """
     Perform rbu command (right button up)
     """
     pyautogui.mouseUp(button='right')
+    fwy_info.butt_stat[1] = False
 
-def do_endcmd(_):
+def do_updown(fwy_info):
+    """
+    Make a hole (ramp_up and ramp_down)
+    """
+    fwy_info.ramp_up()
+    fwy_info.ramp_down()
+    fwy_info.butt_stat[1] = False
+
+def do_endcmd(fwy_info):
     """
     Handle a semi-colon
     """
     pyautogui.mouseUp(button='left')
+    fwy_info.butt_stat[0] = False

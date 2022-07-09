@@ -1,0 +1,21 @@
+clear
+line 310,534 1090,420 A;
+line 1090,340 307,340 B;
+(94, 307, 434, 270, 180, counterclockwise);
+(100, 710, 440, 270, 180, counterclockwise);
+line 610,440 610,444 C rbd move 610,530 rbu move 610,710;
+line 690,710 690,660 D;
+(180, 870, 660, 180, 240, clockwise);
+line 764,491 796,472 M;
+defline 310,534 495,513 G
+line 532,544 570,593 H;
+arc G H 60;
+line 570,593 610,710 F;
+line 690,710 650,710 I rbd move 550,710 rbu;
+line 550,710 357,642 J;
+line 340,580 340,575 L rbd move 340,500 rbu;
+line 340,500 340,434 K;
+arc J L 30;
+line 354,618 343,578 N;
+(63, 277, 434, 360, 180, counterclockwise);
+stopwatch

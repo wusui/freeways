@@ -1,0 +1,40 @@
+clear
+(40, 1070, 380, 90, 180, clockwise);
+line 1030,380 1030,230 A;
+(40, 990, 60, 360, 270, counterclockwise);
+line 1030,230 1030,226 B rbd move 1030,60 rbu;
+line 990,20 206,200 C;
+line 120,320 120,550 D;
+arc C D 120;
+(100, 220, 548, 180, 90, counterclockwise);
+line 220,650 392,650 E;
+(80, 392, 570, 90, 0, counterclockwise);
+line 950,240 960,250 F move 970,280;
+line 970,280 970,396 G;
+(100, 1070, 396, 180, 90, counterclockwise);
+line 640,200 770,200 H;
+line 770,200 780,200 I rbd move 950,240 rbu;
+line 390,550 220,550 J;
+(40, 220, 550, 90, 180, clockwise);
+line 180,520 180,340 K;
+line 250,280 640,200 L;
+arc K L 80;
+defline 900,35 720,75 M
+defline 400,80 400,40 N
+arc M N 140;
+line 400,224 400,190 R;
+line 400,190 400,186 P rbd move 400,80 rbu;
+defline 265,282 322,265 O
+arc O P 40;
+line 320,60 320,110 Q;
+line 320,110 320,115 R rbd move 320,300 rbu;
+(40, 360, 300, 180, 90, counterclockwise)
+line 360,340 400,340 X;
+(40, 400, 300, 90, 0, counterclockwise)
+defline 548,216 608,196 U
+defline 440,400 440,340 W
+arc W U 90;
+line 320,10 260,140 V;
+defline 190,208 70,270 Y;
+arc V Y 80;
+stopwatch

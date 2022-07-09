@@ -11,7 +11,7 @@ from freeway_setup import FreewayInfo
 from compiler import find_solution
 
 if __name__ == "__main__":
-    DEFAULT = "1"
+    DEFAULT = "21"
     if len(sys.argv) > 1:
         DEFAULT = sys.argv[1]
     find_solution(int(DEFAULT),  FreewayInfo())

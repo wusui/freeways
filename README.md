@@ -60,7 +60,7 @@ level. The following is a BNF description of the language.
 <start> ::= <number>
 <end> ::= <number>
 <clockwise> ::= True | False
-<commands> ::= "rbu" | "rbd" | "clear" | "stopwatch"
+<commands> ::= "rbu" | "rbd" | "clear" | "stopwatch" | "hole"
 
 "^#" is a # character at the start of the line. "\n" is a new line.
 "<text>" is any text.
@@ -91,6 +91,8 @@ being north.  Negative values and values greater than 360 are allowed.
 <rbd> is used to draw bridges (right button down).
 
 <rbu> stops drawing a bridge (right button up).
+
+<hole> does a ramp-up and a ramp-down (makes a hole for a road to go through)
 
 <clear> clears the screen.
 
@@ -133,3 +135,13 @@ five seconds.  It is useful for getting coordinate values when developing the so
 
 level is a directory which contains the coded text for each solution.
 
+## Non-generality of code
+
+The code that I have here probably only works on the screen of my laptop.  It is Windows
+specific, and uses numbers that correspond to coordinates on a fixed screen size.  The code
+can probably be adapted to any screen size by changing all numbers to use values relative to
+the window size returned, but I am not motivated enough to make these changes.  It is open
+source MIT licensed code so have at it if you want to generalize things.
+
+To demonstrate how this behaves on my laptop, I have made copies of my solutions in
+[this YouTube playlist](https://www.youtube.com/playlist?list=PLyGVhG3HR7_z0RlyXKd8QDOv_oxX4plDS)

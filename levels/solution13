@@ -1,0 +1,24 @@
+clear
+line 136,262 136,516 A;
+(60, 76, 290, 0, 90, clockwise);
+(60, 76, 480, 270, 360, clockwise);
+line 1010,570 1010,315 B;
+(60, 1070, 560, 180, 270, clockwise);
+(60, 1070, 360, 90, 180, clockwise);
+line 250,630 480,630 C;
+(60, 260, 690, 270, 360, clockwise);
+(60, 460, 690, 180, 270, clockwise);
+line 817,135 478,135 D;
+(60, 750, 75, 90, 180, clockwise);
+(60, 550, 75, 0, 90, clockwise);
+#line 136,500 250,630 E;
+(114, 250, 516, 180, 90, counterclockwise);
+line 480,630 950,630 F;
+(60, 950, 570, 90, 0, counterclockwise);
+line 978,250 866,153 G;
+line 434,140 180,210 H;
+arc G D 80;
+arc B G 80;
+arc D H 160;
+arc H A 60;
+stopwatch

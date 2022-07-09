@@ -46,7 +46,7 @@ def num_to_location(map_no):
         yloc = last_crn - yoff
     return (xloc, yloc)
 
-def draw_arc(arc_info):
+def draw_arc(arc_info, fwy_info):
     """
     Draw a road as an arc of a circle based on the information in the
     arc_info dictionary.  Arc_info contains the following fields
@@ -67,6 +67,7 @@ def draw_arc(arc_info):
                      arc_info["origin"][1] +
                      arc_info["radius"] * math.sin(math.radians(indx)))
     pyautogui.mouseDown(button='left')
+    fwy_info.butt_stat[0] = True
     cstep = 3
     if not arc_info["clockwise"]:
         cstep = -3

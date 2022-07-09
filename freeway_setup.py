@@ -35,6 +35,7 @@ class FreewayInfo():
         self.bounds = bounds
         self.img = img
         self.layout = load_layout()
+        self.butt_stat = [False, False]
 
     def match_pattern(self):
         """
@@ -99,7 +100,8 @@ class FreewayInfo():
         Score this level
         """
         self.find_menu(70, False)
-        time.sleep(2)
+        time.sleep(20)
+        self.find_menu(0, False)
 
     def ramp_up(self):
         """
@@ -123,12 +125,22 @@ class FreewayInfo():
         if self.am_i_bigmap():
             return
         print(self.bounds)
-        xoffset = 0
+        origpos = pyautogui.position()
+        pyautogui.mouseUp(button='left')
+        pyautogui.mouseUp(button='right')
+        bestsofar = self.layout['graycount']
+        bestchunk = 0
         for chunk in range(0, 3):
             graycnt = get_graycount(chunk, self.img)
-            if abs(graycnt - self.layout['graycount']) < 10:
-                xoffset = [34, 471, 900][chunk]
+            print("DEBUG graycnt", chunk, graycnt, self.layout['graycount'])
+            gcdiff = abs(graycnt - self.layout['graycount'])
+            if gcdiff < 10:
+                bestchunk = chunk
                 break
+            if gcdiff < bestsofar:
+                bestsofar = gcdiff
+                bestchunk = chunk
+        xoffset = [34, 471, 900][bestchunk]
         xbc = self.bounds[0] + xoffset
         print ("xbc is", self.bounds[0], "plus", xoffset)
         ybc = self.bounds[3] - 40
@@ -140,6 +152,11 @@ class FreewayInfo():
         print("second menu click ", xbc, ybc)
         pyautogui.moveTo(x=xbc, y=ybc)
         pyautogui.click()
+        pyautogui.moveTo(x=origpos[0], y=origpos[1])
+        if self.butt_stat[0]:
+            pyautogui.mouseDown(button='left')
+        if self.butt_stat[1]:
+            pyautogui.mouseDown(button='right')
 
 def setup(level):
     """

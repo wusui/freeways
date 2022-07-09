@@ -1,0 +1,50 @@
+clear
+# Main roads in star-shaped pattern (most usage, no interactions with other main roads)
+defline 1100,570 1080,570 A
+defline 615,60 615,20 B
+arc A B 520;
+line 520,220 350,555 C;
+line 540,80 540,130 D;
+defline 320,690 320,720 E;
+arc D C 200;
+arc C E 300;
+line 610,450 670,390 J;
+line 730,310 755,280 F;
+line 810,266 1070,266 G;
+arc F G 60;
+line 530,470 560,470 H;
+line 670,390 680,380 I rbd move 730,310 rbu;
+arc H I 80;
+line 400,700 436,546 J;
+arc J H 100;
+line 527,650 1070,650 K;
+line 275,535 312,542 L;
+line 312,542 315,545 M rbd move 465,625 rbu;
+line 465,625 469,627 N
+arc N K 100;
+line 85,500 312,542 O;
+line 450,200 440,200 Q;
+line 1070,200 620,200 P rbd move 450,200 rbu;
+line 360,270 250,375 R;
+arc Q R 40;
+line 160,420 50,420 S;
+arc R S 140;
+line 410,210 360,270 T;
+# All the other connections
+(150, 765, 50, 90, 180, clockwise);
+(120, 520, 760, 180, 270, clockwise);
+defline 772,455 720,374 A
+defline 434,380 387,474 B
+arc A B 120;
+defline 600,470 700,470 C
+defline 434,470 516,218 D
+arc D C 90;
+defline 720,319 735,296 E
+defline 678,232 634,217 F
+arc E F 40;
+line 710,240 643,217 G;
+line 396,228 370,325 I;
+line 370,325 370,500 H;
+(50, 270, 600, 0, 90, clockwise);
+(60, 270, 590, 90, 270, clockwise);
+stopwatch

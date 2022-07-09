@@ -2,7 +2,7 @@
 # Copyright (c) 2022 Warren Usui
 # This code is licensed under the MIT license (see LICENSE.txt for details)
 """
-Print mouse location.  This tool is used to find locations to drraw on
+Print mouse location.  This tool is used to find locations to draw on
 the new map
 """
 import time
