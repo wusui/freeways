@@ -1,0 +1,40 @@
+clear
+line 100,80 80,630 A;
+line 135,680 185,80 A;
+line 1070,120 700,120 A;
+line 700,652 1070,652 A;
+(100, 700, 220, 270, 180, counterclockwise);
+line 600,220 600,562 A;
+(100, 700, 562, 180, 90, counterclockwise);
+(36, 752, 306, 90, 270, clockwise);
+(36, 732, 459, 90, 270, clockwise);
+line 732,423 752,423 A;
+(40, 640, 230, 180, 90, counterclockwise);
+(40, 640, 382, 270, 180, counterclockwise);
+(40, 640, 343, 180, 90, counterclockwise);
+line 823,79 789,109 A;
+line 647,264 735,271 A;
+line 752,342 649,336 A;
+line 643,393 732,423 A;
+line 778,653 827,678 A;
+line 902,735 987,664 A;
+line 937,113 914,85 A;
+line 752,270 930,270 A;
+line 930,270 1062,193 A;
+line 992,541 992,156 A;
+line 1067,575 1038,569 A;
+line 960,495 749,495 A;
+line 1041,567 992,548 A;
+line 1100,568 1043,495 A;
+line 895,596 988,554 A;
+line 895,596 820,495 A;
+line 989,78 904,27 A;
+rbd line 901,689 901,618 A rbu;
+line 901,618 895,596 A;
+rbd line 1043,495 960,495 A rbu;
+rbd line 992,156 989,78 A rbu;
+(60,760, 555, 270, 180, counterclockwise)
+(60, 760, 592, 180, 90, counterclockwise)
+line 700,555 700,592 A;
+line 898,593 898,591 A;
+stopwatch

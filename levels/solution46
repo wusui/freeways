@@ -1,0 +1,29 @@
+clear
+line 1020,78 86,344 A;
+line 78,420 738,420 A;
+line 738,420 1070,142 A;
+line 828,342 1070,342 A;
+(44, 1074, 374, 90, 180, clockwise);
+rbd line 1030,374 1030,310 A rbu;
+line 1030,314 1030,178 A;
+line 928,190 718,162 A;
+line 1022,292 988,260 A;
+rbd line 990,258 938,192 A rbu;
+rbd line 464,392 464,454 A rbu;
+line 464,454 464,680 A;
+line 464,234 464,384 A;
+line 386,420 464,488 A;
+line 540,720 540,452 A;
+rbd line 540,452 540,388 A rbu;
+line 540,388 540,250 A;
+line 540,250 500,210 A;
+line 258,296 258,388 A;
+rbd line 258,388 258,452 A rbu;
+line 258,452 258,574 A;
+line 540,518 658,420 A;
+line 668,180 668,380 A;
+(40, 708, 380, 180, 90, counterclockwise);
+(60, 278, 590, 90, 0, counterclockwise);
+line 314,590 314,480 A;
+(60, 375, 480, 180, 270, clockwise); 
+stopwatch

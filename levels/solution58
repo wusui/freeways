@@ -1,0 +1,14 @@
+clear
+rbd line 534,77 605,121 A rbu;
+line 605,121 1059,413 B;
+rbd line 1070,339 983,399 C rbu;
+line 983,399 538,674 D;
+rbd line 619,687 547,642 E rbu;
+line 547,642 90,346 F;
+rbd line 77,417 155,364 G rbu;
+line 155,364 626,61 H;
+line 205,424 238,320 I;
+line 479,161 680,164 J;
+line 933,326 935,433 K;
+line 654,607 490,606 L;
+stopwatch

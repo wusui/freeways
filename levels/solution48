@@ -1,0 +1,30 @@
+clear
+line 86,135 1022,687 A1;
+line 1078,628 142,82 A2;
+line 461,354 520,344 A3;
+rbd line 520,344 648,344 A4 rbu;
+line 658,344 1090,344 A5;
+line 544,406 674,700 A6;
+line 770,460 722,466 B1;
+rbd line 703,458 664,510 B2 rbu;
+line 664,510 624,604 B3;
+line 774,458 774,390 B4;
+line 774,390 788,346 B5;
+line 762,700 812,610 C1;
+rbd line 812,610 872,473 C2 rbu;
+line 872,473 968,342 C3;
+(60, 920, 476, 216, 486, clockwise);
+line 778,646 944,646 C4;
+line 1072,264 452,264 D1;
+line 532,264 482,224 D2;
+(60, 422, 260, 315, 270, counterclockwise);
+rbd (100, 422, 300, 270, 90, counterclockwise) rbu;
+line 426,404 540,404 D3;
+line 64,114 116,114 E1;
+rbd line 116,114 238,114 E2 rbu;
+line 238,114 400,114 E3;
+(43, 400, 71, 450, 270, counterclockwise);
+line 344,208 344,152 E4;
+line 344,152 406,96 E5;
+line 246,28 0,28 E6;
+stopwatch

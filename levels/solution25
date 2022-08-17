@@ -1,0 +1,26 @@
+clear
+defline 1080,570 1070,570 A
+defline 365,240 363,238 B
+arc A B 1000;
+defline 364,210 364,200 C
+arc B C 120;
+line 441,316 394,272 D;
+(40, 324, 190, 360, 270, counterclockwise);
+line 324,150 254,150 E;
+(40, 404, 190, 180, 270, clockwise);
+line 404,150 466,150 F;
+(60, 515, 265, 0, 90, clockwise);
+rbd line 515,325 380,325 G rbu;
+(100, 530, 507, 270, 180, counterclockwise);
+(104, 545, 510, 450, 315, counterclockwise);
+line 540,608 1072,650 H;
+(60, 380, 385, 270, 180, counterclockwise);
+line 320,385 320,680 I;
+(60, 380, 680, 180, 90, counterclockwise);
+line 380,740 524,712 J;
+line 524,712 732,630 K;
+line 320,405 430,515 M;
+(60, 210, 265, 180, 90, counterclockwise);
+line 210,325 260,325 N;
+(60, 260, 385, 270, 360, clockwise);
+stopwatch

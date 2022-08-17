@@ -1,0 +1,8 @@
+clear
+line 1066,420 40,420 A;
+line 74,496 1082,496 B;
+(190, 132, 686, 270, 360, clockwise);
+(190, 586, 696, 180, 270, clockwise);
+(38, 130, 458, 270, 90, counterclockwise);
+(38, 590, 458, 450, 270, counterclockwise);
+stopwatch

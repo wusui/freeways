@@ -1,0 +1,14 @@
+clear
+line 78,648 1068,648 A1;
+line 1078,572 82,572 A2;
+line 470,684 470,466 A3;
+line 470,216 470,80 A4;
+line 470,186 892,186 A5;
+line 666,186 758,74 A6;
+line 906,112 758,14 A7;
+line 390,76 390,256 A8;
+(98, 292, 474, 0, 90, clockwise);
+(38, 290, 610, 270, 90, counterclockwise);
+rbd line 390,214 390,456 A9 rbu;
+rbd line 470,466 470,214 A10 rbu;
+stopwatch

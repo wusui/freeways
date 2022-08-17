@@ -1,0 +1,65 @@
+clear
+line 614,10 577,47 B rbd move 577,87;
+rbu line 721,5 630,5 A rbd move 580,5 rbu move 540,5;
+line 540,86 540,70 C;
+(80,460,94,90,0,counterclockwise);
+line 614,80 614,240 D;
+line 460,174 570,174 E;
+line 570,174 574,174 F rbd move 644,174 rbu;
+line 644,174 720,174 G;
+(80, 696, 94, 180, 90, counterclockwise);
+line 577,87 500,87 H;
+(89, 569, 5, 0, 90, clockwise);
+line 475,87 250,75 I;
+line 500,87 475,87 J;
+line 826,295 826,690 K;
+(60, 895, 165, 90, 150, clockwise);
+line 845,203 721,5 L;
+(70, 895, 295, 270, 180, counterclockwise);
+line 853,240 350,440 U;
+line 775,211 811,247 M rbd move 871,307 rbu;
+line 714,173 772,208 P;
+line 872,306 880,333 O;
+line 880,333 880,340 N;
+(62, 942, 340, 180, 0, counterclockwise);
+line 875,323 821,400 Q;
+(40, 365, 685, 180, 270, clockwise);
+line 365,645 720,645 R;
+(105, 720, 750, 270, 360, clockwise);
+line 708,648 790,610 S;
+line 790,610 792,610 T rbd move 860,610 rbu;
+line 945,615 980,562 W;
+line 1004,494 1004,340 V;
+defline 900,720 900,700 X
+arc X W 100;
+arc W V 100;
+line 909,636 940,616 N;
+line 994,516 1004,490 O;
+line 862,606 954,593 P;
+defline 248,710 248,720 Y
+arc U Y 240;
+line 254,634 249,690 Y;
+defline 529,362 453,396 Z
+arc D Z 150;
+(100, 864, 564, 360, 270, counterclockwise);
+line 864,464 860,464 J rbd move 780,464 rbu;
+line 780,464 518,369 K;
+line 1004,446 1112,309 L;
+line 1112,309 1112,132 M;
+line 1112,132 721,5 N;
+line 143,196 143,274 N;
+(67,  76, 274, 0, 90, clockwise);
+(60, 319, 134, 270, 180, counterclockwise);
+(58, 201, 134, 0, 90, clockwise);
+#(58, 201, 250, 270, 180, counterclockwise);
+line 201,192 143,260 Z;
+(246, 85, 176, 90, 0, counterclockwise);
+defline 290,287 315,235 O
+arc O E 100;
+line 405,174 460,174 P;
+(102, 219, 184, 360, 270, counterclockwise);
+arc N O 60;
+line 304,285 314,285 P;
+(76, 314, 361, 270, 360, clockwise);
+line 390,361 333,460 N;
+stopwatch

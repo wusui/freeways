@@ -1,0 +1,11 @@
+clear
+(80, 454, 420, 270, 90, counterclockwise);
+(80, 684, 420, 450, 270, counterclockwise);
+(144, 518, 420, 180, 90, counterclockwise);
+line 518,564 620,564 A;
+(144, 620, 420, 90, 0, counterclockwise);
+line 536,70 536,222 B;
+line 536,222 454,340 C;
+line 684,340 612,222 D;
+line 612,222 612,80 E;
+stopwatch

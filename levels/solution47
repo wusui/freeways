@@ -1,0 +1,16 @@
+clear
+(60, 460, 170, 270, 405, clockwise);
+line 510,216 82,420 A11;
+(60, 690, 248, 270, 135, counterclockwise);
+line 638,294 822,680 A21;
+line 902,678 830,594 A31;
+rbd line 830,594 728,564 A41 rbu;
+line 728,564 400,564 A51;
+line 194,676 822,676 A61;
+line 122,440 180,670 A71;
+line 82,340 102,361 A81;
+rbd line 106,366 134,434 A91 rbu;
+(50, 440, 620, 450, 270, counterclockwise);
+line 526,570 156,378 A101;
+stopwatch
+

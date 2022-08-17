@@ -99,6 +99,7 @@ class FreewayInfo():
         """
         Score this level
         """
+        time.sleep(1)
         self.find_menu(70, False)
         time.sleep(20)
         self.find_menu(0, False)

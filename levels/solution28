@@ -1,0 +1,20 @@
+clear
+line 1070,420 70,420 A;
+line 70,495 1070,495 B;
+(78, 1070, 342, 270, 225, counterclockwise);
+line 1017,284 941,360 C;
+line 941,360 850,420 D;
+line 740,300 760,300 E;
+(60, 760, 360, 270, 450, clockwise);
+line 664,376 740,300 F;
+line 616,690 616,535 G;
+rbd line 616,535 664,376 H rbu;
+line 924,188 1070,188 I;
+arc F I 200;
+line 740,300 785,260 J;
+(80, 340, 575, 270, 315,  clockwise);
+line 393,515 463,585 K;
+line 500,600 560,600 L;
+arc K L 40;
+(54, 560, 526, 90, 0, counterclockwise);
+stopwatch

@@ -1,0 +1,27 @@
+clear
+(100, 648, 208, 360, 0, counterclockwise);
+(100, 214, 310, 360, 0, counterclockwise);
+(100, 240, 560, 360, 0, counterclockwise);
+(100, 590, 540, 360, 0, counterclockwise);
+(100, 940, 300, 360, 0, counterclockwise);
+line 125,248 93,256 A;
+line 72,336 102,338 A;
+line 128,568 74,632 A;
+line 134,685 204,652 A;
+line 516,610 538,684 A;
+line 618,685 638,625 A;
+line 996,380 1100,346 A;
+line 720,133 674,38 A;
+line 601,55 592,99 A;
+line 312,481 292,382 D;
+line 300,335 572,295 D;
+line 713,291 839,340 D;
+line 897,392 646,461 D;
+line 510,459 331,507 D;
+line 674,595 969,413 D;
+line 910,204 742,142 D;
+line 574,133 293,219 D;
+line 113,364 136,520 D;
+line 283,646 487,609 D;
+line 1066,270 1030,262 D;
+stopwatch
