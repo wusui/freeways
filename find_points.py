@@ -5,6 +5,7 @@
 Print mouse location.  This tool is used to find locations to draw on
 the new map
 """
+import sys
 import time
 import pyautogui
 from pynput import mouse
@@ -83,4 +84,7 @@ def click_points():
         time.sleep(5)
 
 if __name__ == "__main__":
-    click_points()
+    if len(sys.argv) > 1:
+        find_points()
+    else:
+        click_points()

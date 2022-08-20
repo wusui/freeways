@@ -12,7 +12,7 @@ from compiler import find_solution
 #from compiler import uniquify
 
 if __name__ == "__main__":
-    DEFAULT = "74"
+    DEFAULT = "80"
     if len(sys.argv) > 1:
         DEFAULT = sys.argv[1]
     find_solution(int(DEFAULT),  FreewayInfo())

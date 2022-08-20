@@ -130,8 +130,14 @@ finished redrawing and retimed.
 
 Now if a user is on a map, running python page_tester.py <level> redraws that map.
 
-python find_points.py is a development tool that prints the coordinates of the cursor every
-five seconds.  It is useful for getting coordinate values when developing the solutions found.
+python find_points.py <level> is a development tool that prints the coordinates of the cursor every
+five seconds.  It is useful for getting coordinate values when developing the solutions found
+
+python find_points.py (no parmeters) keeps track of all lines that get entered
+onto the screen.  Line information is stored in linedata.txt.
+
+The uniquify function in compiler.py makes sure that all lines in the solution
+number passed are unique.
 
 level is a directory which contains the coded text for each solution.
 
